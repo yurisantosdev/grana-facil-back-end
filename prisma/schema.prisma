@@ -8,17 +8,18 @@ datasource db {
 }
 
 model Usuarios {
-  uscodigo     String       @id
-  usnome       String
-  usemail      String       @unique
-  ussenha      String
-  usnascimento DateTime
-  usfoto       String
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @default(now())
-  Contas       Contas[]
-  Categorias   Categorias[]
-  Transacoes   Transacoes[]
+  uscodigo                 String                     @id
+  usnome                   String
+  usemail                  String                     @unique
+  ussenha                  String
+  usnascimento             DateTime
+  usfoto                   String
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @default(now())
+  Contas                   Contas[]
+  Categorias               Categorias[]
+  Transacoes               Transacoes[]
+  CodigosRecuperacaoSenhas CodigosRecuperacaoSenhas[]
 
   @@map("usuarios")
 }
@@ -99,4 +100,17 @@ model Transacoes {
   categoria Categorias @relation(fields: [tscategoria], references: [cgcodigo])
 
   @@map("transacoes")
+}
+
+model CodigosRecuperacaoSenhas {
+  crccodigo  String   @id
+  crctoken   Int      @unique
+  crcusuario String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+
+  //Relações
+  usuario Usuarios @relation(fields: [crcusuario], references: [uscodigo])
+
+  @@map("codigosRecuperacaoSenhas")
 }
