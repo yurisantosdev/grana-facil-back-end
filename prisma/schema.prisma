@@ -7,21 +7,95 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model CategoriasProblemas {
-  cacodigo    String   @id
-  cacategoria String   @unique
-  cadescricao String
-  caativa     Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
+model Usuarios {
+  uscodigo     String       @id
+  usnome       String
+  usemail      String       @unique
+  ussenha      String
+  usnascimento DateTime
+  usfoto       String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @default(now())
+  Contas       Contas[]
+  Categorias   Categorias[]
+  Transacoes   Transacoes[]
 
-  @@map("categoriasProblemas")
+  @@map("usuarios")
 }
 
-enum StatusProblemasEnum {
-  EM_ANALISE
-  RESOLVIDO
-  PENDENTE
-  EM_ANDAMENTO
-  CORRIGIR
+model Bancos {
+  bccodigo  String   @id
+  bcnome    String   @unique
+  bclogo    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  Contas    Contas[]
+
+  @@map("bancos")
+}
+
+enum TipoContasEnum {
+  POUPANCA
+  CORRENTO
+  SALARIO
+}
+
+model Contas {
+  ctcodigo  String         @id
+  ctnome    String
+  ctbanco   String
+  cttitular String
+  cttipo    TipoContasEnum
+  ctsaldo   Float
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @default(now())
+
+  //Relações
+  titular    Usuarios     @relation(fields: [cttitular], references: [uscodigo])
+  banco      Bancos       @relation(fields: [ctbanco], references: [bccodigo])
+  Transacoes Transacoes[]
+
+  @@map("contas")
+}
+
+model Categorias {
+  cgcodigo  String   @id
+  cgnome    String
+  cgicone   String
+  cgcor     String
+  cgpadrao  Boolean  @default(false)
+  cgusuario String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  //Relações
+  usuario    Usuarios?    @relation(fields: [cgusuario], references: [uscodigo])
+  Transacoes Transacoes[]
+
+  @@map("categorias")
+}
+
+enum TipoTransacoesEnum {
+  DESPESA
+  RECEITA
+}
+
+model Transacoes {
+  tscodigo    String             @id
+  tsusuario   String
+  tsquando    DateTime
+  tstipo      TipoTransacoesEnum
+  tsvalor     Float
+  tscategoria String
+  tsefetuada  Boolean            @default(false)
+  tsconta     String
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @default(now())
+
+  //Relações
+  conta     Contas     @relation(fields: [tsconta], references: [ctcodigo])
+  usuario   Usuarios   @relation(fields: [tsusuario], references: [uscodigo])
+  categoria Categorias @relation(fields: [tscategoria], references: [cgcodigo])
+
+  @@map("transacoes")
 }
