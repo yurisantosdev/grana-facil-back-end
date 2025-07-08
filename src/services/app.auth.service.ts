@@ -4,7 +4,6 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma.service';
 import * as bcrypt from 'bcrypt';
-import { UsuarioSimplesType } from 'src/types/UsuariosType';
 import { buscarLatitudeLongitude } from 'src/helpers/BuscaEndereco';
 
 @Injectable()
@@ -33,40 +32,7 @@ export class AuthService {
           uscodigo: true,
           usemail: true,
           usnome: true,
-          usendereco: true,
-          usmaster: true,
           createdAt: true,
-          endereco: {
-            select: {
-              edcodigo: true,
-              edbairro: true,
-              edcep: true,
-              edcomplemento: true,
-              edestado: true,
-              edlatitude: true,
-              edlongitude: true,
-              edmunicipio: true,
-              ednumero: true,
-              edpontoreferencia: true,
-              edproblema: true,
-              edrua: true,
-              municipio: {
-                select: {
-                  mccodigo: true,
-                  mcmunicipio: true,
-                  mclatitude: true,
-                  mclongitude: true
-                },
-              },
-              estado: {
-                select: {
-                  escodigo: true,
-                  esestado: true,
-                  essigla: true,
-                },
-              }
-            }
-          }
         },
       });
 

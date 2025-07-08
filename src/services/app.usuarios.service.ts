@@ -3,7 +3,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { randomUUID } from 'crypto';
-import { EsqueciSenhaType, RecuperacaoSenhaType, RedefinirSenhaType, UsuarioType } from 'src/types/UsuariosType';
 import * as bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer';
 

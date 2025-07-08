@@ -5,15 +5,14 @@ import * as cors from 'cors';
 // Controllers
 import { AuthController } from './controllers/app.auth.controller';
 import { UsuariosController } from './controllers/app.usuarios.controller';
-import { EstadosController } from './controllers/app.estados.controller';
-import { CategoriasProblemasController } from './controllers/app.categoriasProblemas.controller';
+import { CategoriasController } from './controllers/app.categorias.controller';
 
 //Services
 import { PrismaService } from './prisma.service';
 import { AuthService } from './services/app.auth.service';
 import { JwtStrategy } from './helpers/JWTStrategy';
 import { UsuarioService } from './services/app.usuarios.service';
-import { CategoriasProblemasServices } from './services/app.categoriasProblemas.service';
+import { CategoriasServices } from './services/app.categorias.service';
 
 @Module({
   imports: [
@@ -21,18 +20,13 @@ import { CategoriasProblemasServices } from './services/app.categoriasProblemas.
       secret: process.env.SECRET,
     }),
   ],
-  controllers: [
-    AuthController,
-    UsuariosController,
-    EstadosController,
-    CategoriasProblemasController,
-  ],
+  controllers: [AuthController, UsuariosController, CategoriasController],
   providers: [
     PrismaService,
     AuthService,
     JwtStrategy,
     UsuarioService,
-    CategoriasProblemasServices,
+    CategoriasServices,
   ],
 })
 export class AppModule implements NestModule {
