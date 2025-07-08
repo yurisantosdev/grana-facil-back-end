@@ -5,6 +5,7 @@ export type CategoriasType = {
   cgcor: string;
   cgpadrao: boolean;
   cgusuario?: string;
+  cgativa: boolean;
   createdAt?: string;
   updatedAt?: string;
 };
