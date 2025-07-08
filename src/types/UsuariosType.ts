@@ -1,4 +1,4 @@
-export type UsuarioType = {
+export type UsuariosType = {
   uscodigo?: string;
   usnome: string;
   usemail: string;
@@ -7,4 +7,8 @@ export type UsuarioType = {
   usfoto: string;
   createdAt?: string;
   updatedAt?: string;
+};
+
+export type EsqueciSenhaType = {
+  email: string;
 };
